@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 from modal import Image, Function, App,Stub, asgi_app, Secret, Volume
 from modal.functions import FunctionCall
+from schemas import ClassificationInput, ClassificationOutput, DetachProcess
 
 app = App("Modal")
 
@@ -15,6 +16,7 @@ api_image = (
         "pydantic==2.6.4",
         "fastapi==0.110.1",
         "python-multipart==0.0.9",
+        "kafka-python-ng==2.2.2",
     )
 )
 
@@ -30,5 +32,11 @@ def fastapi_app():
     @api.get("/")
     async def index():
         return {"message":"version-0.0.1"}
+
+    @api.post("/classification")
+    async def detach_classification(input: ClassificationInput):
+        process = DetachProcess("12893765","asLKJFHDSALKH89#(@)")
+        return process
+
 
     return api
